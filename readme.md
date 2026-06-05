@@ -47,12 +47,7 @@ Updated code:
 
 ```html
 <label class="form-label" for="name">Name</label>
-<input
-  class="form-input-box"
-  type="text"
-  id="name"
-  name="name"
-/>
+<input class="form-input-box" type="text" id="name" name="name" />
 ```
 
 This same fix should also be applied to the Username, Email, and Phone Number fields by replacing their `<span>` labels with proper `<label>` elements that use matching `for` attributes.
@@ -100,8 +95,8 @@ In the `fetchCatFacts()` function, the code hides the loading container by repla
 Initial code:
 
 ```js
-const loading = document.querySelector('.loading-container');
-loading.setAttribute('class', 'display-none');
+const loading = document.querySelector(".loading-container");
+loading.setAttribute("class", "display-none");
 ```
 
 This is an issue because the original `loading-container` class gets removed. After this happens, future JavaScript code that tries to find `.loading-container` may not find the element anymore. This can break the reload behavior for the cat facts section.
@@ -109,8 +104,8 @@ This is an issue because the original `loading-container` class gets removed. Af
 Updated code:
 
 ```js
-const loading = document.querySelector('.loading-container');
-loading.classList.add('display-none');
+const loading = document.querySelector(".loading-container");
+loading.classList.add("display-none");
 ```
-Using `classList.add()` keeps the original `loading-container` class and only adds the `display-none` class.
 
+Using `classList.add()` keeps the original `loading-container` class and only adds the `display-none` class.
