@@ -1,111 +1,25 @@
-### Issue #1: Semantic HTML and Accessibility
+# MIDI Sawtooth Synth
 
-The issue, why this is an issue, and the solution:
+Name: Havirbhavi Pothugunta
 
-The website uses anchor elements as buttons for actions like opening more information and loading new cat facts. Anchor tags should normally be used for navigation with an `href` attribute. In this code, the elements do not navigate anywhere. Instead, JavaScript uses them as clickable buttons.
+## Description
 
-This is an issue because assistive technologies and keyboard users expect links to navigate to another page or section. Since these controls perform an action on the same page, the semantic HTML element should be a `button`.
+This project is a personal MIDI soft synthesizer written in Python. It listens for MIDI note events from a MIDI input device and generates audio through the computer's default audio output.
 
-Initial code:
+The synth is monophonic and uses a sawtooth waveform. It includes a fixed attack-release envelope: notes ramp up over 10 milliseconds when started and ramp down over 10 milliseconds when released. A `note_on` message with velocity 0 is treated as a `note_off` message.
 
-```html
-<a class="more-info-button">More Info</a>
+I also added two extra features: selecting a MIDI input device using `--midi-device`, and using MIDI KEY ON velocity to control note volume.
 
-<a class="reload-cat-facts">Load New Cats Facts</a>
-```
+## Files
 
-Updated code:
+- `synth.py` - main MIDI synthesizer program
+- `play_notes.py` - small MIDI note sender used for testing with loopMIDI
+- `requirements.txt` - Python package dependencies
+- `SYNTH.mp4` - short demo video showing the synth working
 
-```html
-<button class="more-info-button">More Info</button>
+## Requirements
 
-<button class="reload-cat-facts">Load New Cats Facts</button>
-```
+Install dependencies with:
 
-### Issue #2: Form Labels Are Not Properly Connected to Inputs
-
-The issue, why this is an issue, and the solution:
-
-The form uses `<span>` elements to display labels for the Name, Username, Email, and Phone Number fields. Even though the inputs have `id` attributes, the visible label text is not connected to the input using a real `<label>` element.
-
-This is an issue because screen readers and assistive technologies need proper label-input connections to describe each form field correctly. A real `<label>` with a matching `for` attribute also improves usability because clicking the label focuses the related input field.
-
-Initial code:
-
-```html
-<span class="form-label">Name</span>
-<input
-  aria-label="name"
-  class="form-input-box"
-  type="text"
-  id="name"
-  name="name"
-/>
-```
-
-Updated code:
-
-```html
-<label class="form-label" for="name">Name</label>
-<input class="form-input-box" type="text" id="name" name="name" />
-```
-
-This same fix should also be applied to the Username, Email, and Phone Number fields by replacing their `<span>` labels with proper `<label>` elements that use matching `for` attributes.
-
-### Issue #3: Submit and Reset Buttons Are Outside the Form
-
-The issue, why this is an issue, and the solution:
-
-The form is closed before the submit and reset buttons. This means the buttons are not actually inside the form element, even though they are visually part of the form section.
-
-This is an issue because submit and reset buttons should be associated with the form they control. In the current page, both the submit and reset buttons do not work correctly because they are placed outside the `<form>` element.
-
-Initial code:
-
-```html
-</form>
-<div
-  class="form space-evenly-distributed-row-container form-buttons-container"
->
-  <input class="form-button" type="submit" value="submit" />
-  <input class="form-button" type="reset" value="reset" />
-</div>
-```
-
-Updated code:
-
-```html
-<div
-  class="space-evenly-distributed-row-container form-buttons-container"
->
-  <input class="form-button" type="submit" value="submit" />
-  <input class="form-button" type="reset" value="reset" />
-</div>
-</form>
-```
-
-The button container should be moved before the closing `</form>` tag so both buttons belong to the form.
-
-### Issue #4: Loading Container Class Is Replaced
-
-The issue, why this is an issue, and the solution:
-
-In the `fetchCatFacts()` function, the code hides the loading container by replacing the entire `class` attribute with `display-none`.
-
-Initial code:
-
-```js
-const loading = document.querySelector(".loading-container");
-loading.setAttribute("class", "display-none");
-```
-
-This is an issue because the original `loading-container` class gets removed. After this happens, future JavaScript code that tries to find `.loading-container` may not find the element anymore. This can break the reload behavior for the cat facts section.
-
-Updated code:
-
-```js
-const loading = document.querySelector(".loading-container");
-loading.classList.add("display-none");
-```
-
-Using `classList.add()` keeps the original `loading-container` class and only adds the `display-none` class.
+```bash
+pip install -r requirements.txt
